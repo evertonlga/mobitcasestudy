@@ -24,8 +24,5 @@ public class System {
 		Quiz quiz5 = Quiz.getInstance("Quiz 5");
 		
 		quizManager.schedulerOfQuizes();
-		
-		
-				
 	}
 }
