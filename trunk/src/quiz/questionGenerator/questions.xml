@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<list>
+  <quiz.util.Question>
+    <description>Primeira questão?</description>
+    <category>database</category>
+    <alternatives>
+      <string>Resposta 1</string>
+      <string>Resposta 2</string>
+      <string>Resposta 3</string>
+      <string>Resposta 4</string>
+      <string>Resposta 5</string>
+    </alternatives>
+    <answer>3</answer>
+  </quiz.util.Question>
+   <quiz.util.Question>
+    <description>Segunda questão?</description>
+    <category>database</category>
+    <alternatives>
+      <string>Resposta 1</string>
+      <string>Resposta 2</string>
+      <string>Resposta 3</string>
+      <string>Resposta 4</string>
+      <string>Resposta 5</string>
+    </alternatives>
+    <answer>3</answer>
+  </quiz.util.Question>
+   <quiz.util.Question>
+    <description>Terceira questão?</description>
+    <category>database</category>
+    <alternatives>
+      <string>Resposta 1</string>
+      <string>Resposta 2</string>
+      <string>Resposta 3</string>
+      <string>Resposta 4</string>
+      <string>Resposta 5</string>
+    </alternatives>
+    <answer>3</answer>
+  </quiz.util.Question>
+   <quiz.util.Question>
+    <description>Quarta questão?</description>
+    <category>database</category>
+    <alternatives>
+      <string>Resposta 1</string>
+      <string>Resposta 2</string>
+      <string>Resposta 3</string>
+      <string>Resposta 4</string>
+      <string>Resposta 5</string>
+    </alternatives>
+    <answer>3</answer>
+  </quiz.util.Question>
+</list>
