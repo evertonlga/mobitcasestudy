@@ -1,4 +1,4 @@
-package src.quiz.util;
+package quiz.util;
 
 /**
  * This enumaration represents the categories of the Question. <br>

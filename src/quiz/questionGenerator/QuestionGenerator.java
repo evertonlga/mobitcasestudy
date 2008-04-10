@@ -1,4 +1,4 @@
-package src.quiz.questionGenerator;
+package quiz.questionGenerator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import src.quiz.util.Question;
+import quiz.util.Question;
 
 import com.thoughtworks.xstream.XStream;
 
