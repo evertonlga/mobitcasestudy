@@ -1,4 +1,4 @@
-package src.quiz.util;
+package quiz.util;
 
 /**
  * This class represents a Result of the Quiz. <br>
@@ -53,4 +53,3 @@ public class Result {
 	}
 
 }
-

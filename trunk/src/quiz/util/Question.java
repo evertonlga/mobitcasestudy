@@ -1,4 +1,4 @@
-package src.quiz.util;
+package quiz.util;
 
 import java.util.List;
 
