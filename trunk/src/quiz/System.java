@@ -1,4 +1,4 @@
-package quiz;
+package src.quiz;
 
 /**
 * This class represents the Context. <br>
