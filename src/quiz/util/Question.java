@@ -86,6 +86,14 @@ public class Question {
 		this.answer = answer;
 	}
 	
-	
+	public String toString(){
+		String ret = this.description+"\n\n";
+		int i = 0;
+		while (i < this.alternatives.size()){
+			ret+= alternatives.get(i)+"\n";
+			i++;
+		}
+		return ret;
+	}
 
 }

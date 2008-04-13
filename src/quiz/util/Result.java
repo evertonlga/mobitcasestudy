@@ -21,7 +21,8 @@ public class Result {
 	 *
 	 */
 	public Result() {
-
+		this.score = 0;
+		this.time = 0;
 	}
 
 	/**

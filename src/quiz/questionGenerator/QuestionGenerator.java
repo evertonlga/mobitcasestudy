@@ -21,7 +21,7 @@ import com.thoughtworks.xstream.XStream;
  */
 public class QuestionGenerator {
 
-	public List<Question> questions;
+	public ArrayList<Question> questions;
 
 	/**
 	 * Constructor
@@ -35,13 +35,14 @@ public class QuestionGenerator {
 	 * Returns a question.
 	 * @return a question.
 	 */
-	public Question getQuestion() {
-		// uma forma de pegar uma questão aleatória
-		Collections.shuffle(questions);
-		Question question = questions.get(0);
-		questions.remove(question);
-		return question;
-	}
+//	public Question getQuestion() {
+//		// uma forma de pegar uma questão aleatória
+//		ArrayList<Question> cloneQuestions = (ArrayList<Question>) questions.clone();
+//		Collections.shuffle(cloneQuestions);
+//		Question question = cloneQuestions.get(0);
+//		cloneQuestions.remove(question);
+//		return question;
+//	}
 
 	/**
 	 * Returns a list of questions.
@@ -49,17 +50,23 @@ public class QuestionGenerator {
 	 * @return A list of questions.
 	 */
 	@SuppressWarnings("unchecked")
-	private List<Question> getQuestions() {
+	private ArrayList<Question> getQuestions() {
 		XStream xstream = new XStream();
-		List<Question> questions = new ArrayList<Question>();
+		ArrayList<Question> questions = new ArrayList<Question>();
 		try {
 			FileReader file = new FileReader(
 					"src/quiz/questionGenerator/questions.xml");
-			questions = (List) xstream.fromXML(new BufferedReader(file));
+			questions = (ArrayList) xstream.fromXML(new BufferedReader(file));
 			file.close();
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
 		return questions;
 	}
+
+	public ArrayList<Question> returnQuestions() {
+		return this.questions;
+	}
+	
+	
 }

@@ -1,6 +1,7 @@
 package quiz.quizManager;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import quiz.quiz.Quiz;
@@ -29,18 +30,24 @@ public class QuizManager implements Serializable{
 		
 	}
 	
-	public void schedulerOfQuizes(){
-		Quiz quiz1 = Quiz.getInstance("Quiz 1");
-		Quiz quiz2 = Quiz.getInstance("Quiz 2");
-		Quiz quiz3 = Quiz.getInstance("Quiz 3");
-		Quiz quiz4 = Quiz.getInstance("Quiz 4");
-		Quiz quiz5 = Quiz.getInstance("Quiz 5");
+	public void schedulerOfQuizes(ArrayList<Quiz> quizCollection){
+		int numberOfQuestions = 5;
+		for (Quiz quiz : quizCollection){
+			quiz.configure(numberOfQuestions);
+			quiz.start();
+		}
 		
-		quiz1.start();
-		quiz2.start();
-		quiz3.start();
-		quiz4.start();
-		quiz5.start();
+//		Quiz quiz1 = Quiz.getInstance("Quiz 1");
+//		Quiz quiz2 = Quiz.getInstance("Quiz 2");
+//		Quiz quiz3 = Quiz.getInstance("Quiz 3");
+//		Quiz quiz4 = Quiz.getInstance("Quiz 4");
+//		Quiz quiz5 = Quiz.getInstance("Quiz 5");
+//		
+//		quiz1.start();
+//		quiz2.start();
+//		quiz3.start();
+//		quiz4.start();
+//		quiz5.start();
 				
 	}
 	
