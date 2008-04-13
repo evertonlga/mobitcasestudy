@@ -1,8 +1,12 @@
 package quiz.quiz;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Scanner;
 
 import quiz.questionGenerator.QuestionGenerator;
+import quiz.util.Question;
 import quiz.util.Result;
 
 /**
@@ -26,6 +30,8 @@ public class Quiz extends Thread implements Serializable {
 	private Result result;
 
 	private QuestionGenerator questionGenerator;
+	
+	private ArrayList<Question> questions ;
 
 	private static Quiz instance = null;
 
@@ -51,8 +57,9 @@ public class Quiz extends Thread implements Serializable {
 		// dorme entre 0 e 5 segundos
 		time = (int) (Math.random() * 5000);
 		System.err.println("Name: " + getName() + "; sleep: " + time);
-
-		questionGenerator = new QuestionGenerator();
+		this.questionGenerator = new QuestionGenerator();
+		this.questions = questionGenerator.returnQuestions();
+		this.result = new Result();
 
 	}
 
@@ -69,18 +76,36 @@ public class Quiz extends Thread implements Serializable {
 	}
 
 	public void run() {
-		antes = System.currentTimeMillis();
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException exception) {
-			System.err.println(exception.toString());
+//		antes = System.currentTimeMillis();
+//		try {
+//			Thread.sleep(time);
+//		} catch (InterruptedException exception) {
+//			System.err.println(exception.toString());
+//		}
+//
+//		depois = System.currentTimeMillis();
+//
+//		System.out.println((depois - antes) + " ms");
+		Scanner input = new Scanner(System.in);
+		for (int i = 0;i < numberOfQuestions; i++){
+			Question q = getQuestion();
+			System.out.println(q);
+			int userAnswer = input.nextInt();
+			if (q.getAnswer() == userAnswer){
+				Result r = getPartialResult();
+				r.setScore(r.getScore()+1);
+				setPartialResult(r);
+			}
 		}
-
-		depois = System.currentTimeMillis();
-
-		System.out.println((depois - antes) + " ms");
 	}
 
+	public Question getQuestion() {
+		Collections.shuffle(questions);
+		Question question = questions.get(0);
+		questions.remove(question);
+		return question;
+	}
+	
 	public void help() {
 
 	}
@@ -101,7 +126,7 @@ public class Quiz extends Thread implements Serializable {
 		this.result = result;
 	}
 
-	public void configure() {
-
+	public void configure(int numberOfQuestions) {
+		this.numberOfQuestions = numberOfQuestions;
 	}
 }
