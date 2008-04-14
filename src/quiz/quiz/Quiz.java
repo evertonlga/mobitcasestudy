@@ -51,12 +51,9 @@ public class Quiz extends Thread implements Serializable {
 	 * Constructor
 	 *
 	 */
-	private Quiz(String name) {
+	public Quiz(String name) {
 		super(name);
 
-		// dorme entre 0 e 5 segundos
-//		time = (int) (Math.random() * 5000);
-//		System.err.println("Name: " + getName() + "; sleep: " + time);
 		this.questionGenerator = new QuestionGenerator();
 		this.questions = questionGenerator.returnQuestions();
 		this.result = new Result();
@@ -65,17 +62,6 @@ public class Quiz extends Thread implements Serializable {
 
 	}
 
-	/**
-	 * Returns a instance of Quiz 
-	 * @param name The Quiz name
-	 * @return The instance
-	 */
-	public static Quiz getInstance(String name) {
-		if (instance == null) {
-			return new Quiz(name);
-		}
-		return instance;
-	}
 	
 	public Result begin(){
 		run();
@@ -96,7 +82,7 @@ public class Quiz extends Thread implements Serializable {
 		Scanner input = new Scanner(System.in);
 		Result r = getPartialResult();
 		for (int i = 0;i < numberOfQuestions; i++){
-			Question q = getQuestion();
+			Question q = questionGenerator.getQuestion();
 			System.out.println(q);
 			System.out.print("Give your answer:");
 			int userAnswer = input.nextInt();
@@ -121,14 +107,6 @@ public class Quiz extends Thread implements Serializable {
 			}
 			
 		}
-		System.out.println(result);
-	}
-
-	public Question getQuestion() {
-		Collections.shuffle(questions);
-		Question question = questions.get(0);
-		questions.remove(question);
-		return question;
 	}
 	
 	public void help() {

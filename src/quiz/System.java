@@ -20,7 +20,7 @@ public class System {
 		
 		ArrayList<Quiz> quizCollection = new ArrayList<Quiz>();
 		//cria os quizes (instance == null)
-		Quiz quiz1 = Quiz.getInstance("Quiz 1");
+		Quiz quiz1 = new Quiz("Quiz 1");
 //		Quiz quiz2 = Quiz.getInstance("Quiz 2");
 //		Quiz quiz3 = Quiz.getInstance("Quiz 3");
 //		Quiz quiz4 = Quiz.getInstance("Quiz 4");
