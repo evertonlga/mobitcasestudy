@@ -21,7 +21,7 @@ public class QuizManager implements Serializable{
 	
 	private List quizesResults;
 	
-	private int numberOfQuizes;
+	//private int numberOfQuizes;
 	
 	/**
 	 * Constructor
@@ -35,28 +35,18 @@ public class QuizManager implements Serializable{
 		int numberOfQuestions = 5;
 		for (Quiz quiz : quizCollection){
 			quiz.configure(numberOfQuestions);
-			quizesResults.add(quiz.begin());
+			Result result = quiz.begin();
+			evaluateResult(result, numberOfQuestions);
+			quizesResults.add(result);
 		}
-		
-//		Quiz quiz1 = Quiz.getInstance("Quiz 1");
-//		Quiz quiz2 = Quiz.getInstance("Quiz 2");
-//		Quiz quiz3 = Quiz.getInstance("Quiz 3");
-//		Quiz quiz4 = Quiz.getInstance("Quiz 4");
-//		Quiz quiz5 = Quiz.getInstance("Quiz 5");
-//		
-//		quiz1.start();
-//		quiz2.start();
-//		quiz3.start();
-//		quiz4.start();
-//		quiz5.start();
-				
+						
 	}
 	
 	public void createUserProfile(){
 		
 	}
 
-	public void evaluateResult(){
+	public void evaluateResult(Result result, int numberOfQuestions){
 		
 	}
 	

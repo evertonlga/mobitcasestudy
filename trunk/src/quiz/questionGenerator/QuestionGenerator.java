@@ -35,14 +35,13 @@ public class QuestionGenerator {
 	 * Returns a question.
 	 * @return a question.
 	 */
-//	public Question getQuestion() {
-//		// uma forma de pegar uma questão aleatória
-//		ArrayList<Question> cloneQuestions = (ArrayList<Question>) questions.clone();
-//		Collections.shuffle(cloneQuestions);
-//		Question question = cloneQuestions.get(0);
-//		cloneQuestions.remove(question);
-//		return question;
-//	}
+	public Question getQuestion() {
+		// uma forma de pegar uma questão aleatória
+		Collections.shuffle(questions);
+		Question question = questions.get(0);
+		questions.remove(question);
+		return question;
+	}
 
 	/**
 	 * Returns a list of questions.
