@@ -21,15 +21,15 @@ public class System {
 		ArrayList<Quiz> quizCollection = new ArrayList<Quiz>();
 		//cria os quizes (instance == null)
 		Quiz quiz1 = Quiz.getInstance("Quiz 1");
-		Quiz quiz2 = Quiz.getInstance("Quiz 2");
-		Quiz quiz3 = Quiz.getInstance("Quiz 3");
-		Quiz quiz4 = Quiz.getInstance("Quiz 4");
-		Quiz quiz5 = Quiz.getInstance("Quiz 5");
+//		Quiz quiz2 = Quiz.getInstance("Quiz 2");
+//		Quiz quiz3 = Quiz.getInstance("Quiz 3");
+//		Quiz quiz4 = Quiz.getInstance("Quiz 4");
+//		Quiz quiz5 = Quiz.getInstance("Quiz 5");
 		quizCollection.add(quiz1);
-		quizCollection.add(quiz2);
-		quizCollection.add(quiz3);
-		quizCollection.add(quiz4);
-		quizCollection.add(quiz5);
+//		quizCollection.add(quiz2);
+//		quizCollection.add(quiz3);
+//		quizCollection.add(quiz4);
+//		quizCollection.add(quiz5);
 		quizManager.schedulerOfQuizes(quizCollection);
 	}
 }
