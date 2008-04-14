@@ -21,7 +21,9 @@ public class Quiz extends Thread implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private int time;
+	private long InitialTime;
+	
+	private long acumulatedTime;
 
 	private int status;
 
@@ -35,9 +37,7 @@ public class Quiz extends Thread implements Serializable {
 
 	private static Quiz instance = null;
 
-	private long antes;
-
-	private long depois;
+	Scanner input = new Scanner(System.in);
 
 	private static final int STARTING = 0;
 
@@ -55,11 +55,13 @@ public class Quiz extends Thread implements Serializable {
 		super(name);
 
 		// dorme entre 0 e 5 segundos
-		time = (int) (Math.random() * 5000);
-		System.err.println("Name: " + getName() + "; sleep: " + time);
+//		time = (int) (Math.random() * 5000);
+//		System.err.println("Name: " + getName() + "; sleep: " + time);
 		this.questionGenerator = new QuestionGenerator();
 		this.questions = questionGenerator.returnQuestions();
 		this.result = new Result();
+		this.InitialTime = System.currentTimeMillis();
+		this.acumulatedTime = 0;
 
 	}
 
@@ -87,16 +89,34 @@ public class Quiz extends Thread implements Serializable {
 //
 //		System.out.println((depois - antes) + " ms");
 		Scanner input = new Scanner(System.in);
+		Result r = getPartialResult();
 		for (int i = 0;i < numberOfQuestions; i++){
 			Question q = getQuestion();
 			System.out.println(q);
+			System.out.print("Give your answer:");
 			int userAnswer = input.nextInt();
-			if (q.getAnswer() == userAnswer){
-				Result r = getPartialResult();
+			if (q.getAnswer() == userAnswer)				
 				r.setScore(r.getScore()+1);
-				setPartialResult(r);
+			
+			setAcumulatedTime(getAcumulatedTime()+ (System.currentTimeMillis() - getInitialTime()));
+			r.setTime(getAcumulatedTime());
+			setPartialResult(r);
+			synchronized (this) {
+				System.out.println("\nFor pause press 1\nFor abort the Quiz press 2\n" +
+						"For help press 3");
+				int key = input.nextInt();
+				switch (key) {
+				case 1:pause();				
+					break;
+				case 2:abort();
+					break;
+				case 3:help();
+					break;
+				}
 			}
+			
 		}
+		System.out.println(result);
 	}
 
 	public Question getQuestion() {
@@ -107,15 +127,34 @@ public class Quiz extends Thread implements Serializable {
 	}
 	
 	public void help() {
-
+		System.out.println("HELP!!!\n For back to Quiz press 0");
+		int r = 100;
+		while(r != 0){
+			r = input.nextInt();
+		}
 	}
 
 	public void pause() {
-
+		try {
+			setInitialTime(System.currentTimeMillis());
+			System.out.println("For unpause press 0");
+			boolean b = true;
+			while(b == true){
+				wait(10);
+				int p = input.nextInt();
+				if (p == 0){
+					b = false;
+					notifyAll();
+				}
+			}
+		} catch (InterruptedException e) {
+		}
 	}
 
 	public void abort() {
-
+		synchronized (this) {
+			super.stop();	
+		}
 	}
 
 	public Result getPartialResult() {
@@ -128,5 +167,21 @@ public class Quiz extends Thread implements Serializable {
 
 	public void configure(int numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
+	}
+
+	public long getInitialTime() {
+		return InitialTime;
+	}
+
+	public long getAcumulatedTime() {
+		return acumulatedTime;
+	}
+
+	public void setAcumulatedTime(long acumulatedTime) {
+		this.acumulatedTime = acumulatedTime;
+	}
+
+	public void setInitialTime(long initialTime) {
+		InitialTime = initialTime;
 	}
 }

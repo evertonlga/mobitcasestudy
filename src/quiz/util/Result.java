@@ -12,7 +12,7 @@ public class Result {
 
 	// attributes
 
-	private int time;
+	private long time;
 
 	private int score;
 
@@ -42,15 +42,19 @@ public class Result {
 	/**
 	 * @return the time
 	 */
-	public int getTime() {
+	public long getTime() {
 		return time;
 	}
 
 	/**
 	 * @param time the time to set
 	 */
-	public void setTime(int time) {
+	public void setTime(long time) {
 		this.time = time;
+	}
+	
+	public String toString(){
+		return "Final Time: "+getTime()+"\nFinal Score: "+ getScore();
 	}
 
 }
