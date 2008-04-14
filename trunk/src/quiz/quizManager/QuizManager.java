@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import quiz.quiz.Quiz;
+import quiz.util.Result;
 
 /**
  * This class represents a Quiz Manager. <br>
@@ -27,14 +28,14 @@ public class QuizManager implements Serializable{
 	 *
 	 */
 	public QuizManager(){
-		
+		this.quizesResults = new ArrayList<Result>();
 	}
 	
 	public void schedulerOfQuizes(ArrayList<Quiz> quizCollection){
 		int numberOfQuestions = 5;
 		for (Quiz quiz : quizCollection){
 			quiz.configure(numberOfQuestions);
-			quiz.start();
+			quizesResults.add(quiz.begin());
 		}
 		
 //		Quiz quiz1 = Quiz.getInstance("Quiz 1");
