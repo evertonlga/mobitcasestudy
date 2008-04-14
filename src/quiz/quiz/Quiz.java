@@ -60,7 +60,7 @@ public class Quiz extends Thread implements Serializable {
 		this.questionGenerator = new QuestionGenerator();
 		this.questions = questionGenerator.returnQuestions();
 		this.result = new Result();
-		this.InitialTime = System.currentTimeMillis();
+		this.InitialTime = System.currentTimeMillis()/1000L;
 		this.acumulatedTime = 0;
 
 	}
@@ -76,7 +76,12 @@ public class Quiz extends Thread implements Serializable {
 		}
 		return instance;
 	}
-
+	
+	public Result begin(){
+		run();
+		return result;
+	}
+	
 	public void run() {
 //		antes = System.currentTimeMillis();
 //		try {
@@ -98,7 +103,7 @@ public class Quiz extends Thread implements Serializable {
 			if (q.getAnswer() == userAnswer)				
 				r.setScore(r.getScore()+1);
 			
-			setAcumulatedTime(getAcumulatedTime()+ (System.currentTimeMillis() - getInitialTime()));
+			setAcumulatedTime(getAcumulatedTime()+ (System.currentTimeMillis()/1000L - getInitialTime()));
 			r.setTime(getAcumulatedTime());
 			setPartialResult(r);
 			synchronized (this) {
@@ -136,7 +141,7 @@ public class Quiz extends Thread implements Serializable {
 
 	public void pause() {
 		try {
-			setInitialTime(System.currentTimeMillis());
+			setInitialTime(System.currentTimeMillis()/1000L);
 			System.out.println("For unpause press 0");
 			boolean b = true;
 			while(b == true){
