@@ -21,6 +21,8 @@ public class QuizManager implements Serializable{
 	
 	private List quizesResults;
 	
+	static List<Result> lista;
+	
 	//private int numberOfQuizes;
 	
 	/**
@@ -34,10 +36,39 @@ public class QuizManager implements Serializable{
 	public void schedulerOfQuizes(ArrayList<Quiz> quizCollection){
 		int numberOfQuestions = 5;
 		for (Quiz quiz : quizCollection){
-			quiz.configure(numberOfQuestions);
-			Result result = quiz.begin();
-			evaluateResult(result, numberOfQuestions);
-			quizesResults.add(result);
+			quiz.configure(numberOfQuestions);		
+			
+			quiz.start();
+			
+			lista = new ArrayList<Result>();				
+			int currentQuestion = -1;
+			while (quiz.isAlive() ){
+				int question = quiz.currentQuestion();
+				if (quiz.isAnswer())
+					if (currentQuestion != question){
+						Result result = quiz.getPartialResult();
+						Result resultP = new Result();
+						resultP.setScore(result.getScore());
+						resultP.setTime(result.getTime());
+						lista.add(result);
+						currentQuestion = question;
+					}
+				
+				
+			}
+			
+			System.out.println(lista.size());
+			for (int i = 0; i < lista.size(); i++) {
+				Result result2 = (Result)lista.get(i);
+				System.out.println("=>>  TIME "+result2.getTime()/1000L+" =>>  SCORE "+result2.getScore());
+			}
+			
+			
+			Result finalResult =  quiz.getPartialResult();
+			System.out.println(finalResult);
+			evaluateResult(finalResult, numberOfQuestions);
+			quizesResults.add(finalResult);
+					
 		}
 						
 	}
