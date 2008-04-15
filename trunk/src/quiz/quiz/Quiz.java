@@ -33,10 +33,6 @@ public class Quiz extends Thread implements Serializable {
 
 	private QuestionGenerator questionGenerator;
 	
-	private ArrayList<Question> questions ;
-
-	private static Quiz instance = null;
-
 	Scanner input = new Scanner(System.in);
 
 	private static final int STARTING = 0;
@@ -59,7 +55,6 @@ public class Quiz extends Thread implements Serializable {
 		super(name);
 
 		this.questionGenerator = new QuestionGenerator();
-		this.questions = questionGenerator.returnQuestions();
 		this.result = new Result();
 		this.InitialTime = System.currentTimeMillis();
 		this.acumulatedTime = 0;
@@ -67,11 +62,6 @@ public class Quiz extends Thread implements Serializable {
 
 	}
 
-	
-	public Result begin(){
-		run();
-		return result;
-	}
 	
 	public void run() {
 
