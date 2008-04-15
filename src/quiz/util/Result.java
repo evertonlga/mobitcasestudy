@@ -16,6 +16,7 @@ public class Result {
 
 	private int score;
 
+
 	/**
 	 * Constructor
 	 *
@@ -54,7 +55,9 @@ public class Result {
 	}
 	
 	public String toString(){
-		return "Final Time: "+getTime()+"\nFinal Score: "+ getScore();
+		return "Final Time: "+getTime()/1000L+"\nFinal Score: "+ getScore();
 	}
 
+
+	
 }

@@ -46,6 +46,10 @@ public class Quiz extends Thread implements Serializable {
 	private static final int PAUSING = 2;
 
 	private static final int ABORTING = 3;
+	
+	private int currentQuestion;
+
+	private boolean answer;
 
 	/**
 	 * Constructor
@@ -57,8 +61,9 @@ public class Quiz extends Thread implements Serializable {
 		this.questionGenerator = new QuestionGenerator();
 		this.questions = questionGenerator.returnQuestions();
 		this.result = new Result();
-		this.InitialTime = System.currentTimeMillis()/1000L;
+		this.InitialTime = System.currentTimeMillis();
 		this.acumulatedTime = 0;
+		this.answer = false;
 
 	}
 
@@ -69,29 +74,28 @@ public class Quiz extends Thread implements Serializable {
 	}
 	
 	public void run() {
-//		antes = System.currentTimeMillis();
-//		try {
-//			Thread.sleep(time);
-//		} catch (InterruptedException exception) {
-//			System.err.println(exception.toString());
-//		}
-//
-//		depois = System.currentTimeMillis();
-//
-//		System.out.println((depois - antes) + " ms");
+
 		Scanner input = new Scanner(System.in);
 		Result r = getPartialResult();
 		for (int i = 0;i < numberOfQuestions; i++){
+			Result res = new Result();
+			setAnswer(false);
 			Question q = questionGenerator.getQuestion();
+			
 			System.out.println(q);
 			System.out.print("Give your answer:");
 			int userAnswer = input.nextInt();
 			if (q.getAnswer() == userAnswer)				
-				r.setScore(r.getScore()+1);
+				res.setScore(result.getScore()+1);
 			
-			setAcumulatedTime(getAcumulatedTime()+ (System.currentTimeMillis()/1000L - getInitialTime()));
-			r.setTime(getAcumulatedTime());
-			setPartialResult(r);
+			setAcumulatedTime(getAcumulatedTime()+ (System.currentTimeMillis() - getInitialTime()));
+			
+			
+			res.setTime(getAcumulatedTime());
+			setPartialResult(res);
+			
+			currentQuestion = i;
+			setAnswer(true);
 			synchronized (this) {
 				System.out.println("\nFor pause press 1\nFor abort the Quiz press 2\n" +
 						"For help press 3");
@@ -119,7 +123,7 @@ public class Quiz extends Thread implements Serializable {
 
 	public void pause() {
 		try {
-			setInitialTime(System.currentTimeMillis()/1000L);
+			setInitialTime(System.currentTimeMillis());
 			System.out.println("For unpause press 0");
 			boolean b = true;
 			while(b == true){
@@ -167,4 +171,19 @@ public class Quiz extends Thread implements Serializable {
 	public void setInitialTime(long initialTime) {
 		InitialTime = initialTime;
 	}
+		
+	public int currentQuestion(){
+		return currentQuestion;
+	}
+
+
+	public boolean isAnswer() {
+		return answer;
+	}
+
+
+	public void setAnswer(boolean answer) {
+		this.answer = answer;
+	}
+
 }
