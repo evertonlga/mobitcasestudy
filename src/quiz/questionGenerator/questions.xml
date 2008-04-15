@@ -58,6 +58,6 @@
       <string>Resposta 4</string>
       <string>Resposta 5</string>
     </alternatives>
-    <answer>5</answer>
+    <answer>3</answer>
   </quiz.util.Question>
 </list>

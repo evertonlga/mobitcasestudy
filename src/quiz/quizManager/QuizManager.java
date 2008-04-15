@@ -23,7 +23,7 @@ public class QuizManager implements Serializable{
 	
 	static List<Result> lista;
 	
-	//private int numberOfQuizes;
+	
 	
 	/**
 	 * Constructor
@@ -44,7 +44,7 @@ public class QuizManager implements Serializable{
 			int currentQuestion = -1;
 			while (quiz.isAlive() ){
 				int question = quiz.currentQuestion();
-				if (quiz.isAnswer())
+				if (quiz.isResponded())
 					if (currentQuestion != question){
 						Result result = quiz.getPartialResult();
 						lista.add(result);
@@ -62,11 +62,12 @@ public class QuizManager implements Serializable{
 			
 			
 			Result finalResult =  quiz.getPartialResult();
-			System.out.println(finalResult);
+			//System.out.println(finalResult);
 			evaluateResult(finalResult, numberOfQuestions);
 			quizesResults.add(finalResult);
 					
 		}
+		evaluateFinalResult(quizesResults,numberOfQuestions);
 						
 	}
 	
@@ -75,10 +76,17 @@ public class QuizManager implements Serializable{
 	}
 
 	public void evaluateResult(Result result, int numberOfQuestions){
+		double d = result.getScore()/numberOfQuestions*100;
+		System.out.println(result+"\nThe percentage of successes was: "+
+				new Double(result.getScore())/numberOfQuestions*100+"%");
 		
 	}
 	
-	public void evaluateFinalResult(){
-		
+	public void evaluateFinalResult(List quizesResults, int numberOfQuestions){
+		System.out.println("Final results of quizes:");
+		for (int i = 0; i < quizesResults.size(); i++){
+			System.out.println("The percentage of successes in the quiz "+(i+1)+" was:"+
+				new Double(((Result)quizesResults.get(i)).getScore())/numberOfQuestions*100+"%");
+		}
 	}
 }
