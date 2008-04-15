@@ -47,9 +47,6 @@ public class QuizManager implements Serializable{
 				if (quiz.isAnswer())
 					if (currentQuestion != question){
 						Result result = quiz.getPartialResult();
-						Result resultP = new Result();
-						resultP.setScore(result.getScore());
-						resultP.setTime(result.getTime());
 						lista.add(result);
 						currentQuestion = question;
 					}
