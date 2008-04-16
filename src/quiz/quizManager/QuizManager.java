@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import quiz.quiz.Quiz;
+import quiz.util.CategoryInformation;
+import quiz.util.CategoryKind;
 import quiz.util.Result;
 
 /**
@@ -54,11 +56,11 @@ public class QuizManager implements Serializable{
 				
 			}
 			
-			System.out.println(lista.size());
-			for (int i = 0; i < lista.size(); i++) {
-				Result result2 = (Result)lista.get(i);
-				System.out.println("=>>  TIME "+result2.getTime()/1000L+" =>>  SCORE "+result2.getScore());
-			}
+//			System.out.println(lista.size());
+//			for (int i = 0; i < lista.size(); i++) {
+//				Result result2 = (Result)lista.get(i);
+//				System.out.println("=>>  TIME "+result2.getTime()/1000L+" =>>  SCORE "+result2.getScore());
+//			}
 			
 			
 			Result finalResult =  quiz.getPartialResult();
@@ -68,10 +70,50 @@ public class QuizManager implements Serializable{
 					
 		}
 		evaluateFinalResult(quizesResults,numberOfQuestions);
+		createUserProfile(quizesResults);
 						
 	}
 	
-	public void createUserProfile(){
+	public void createUserProfile(List quizesResults){
+		System.out.println("\n\n User Profile:\n");
+		CategoryKind [] categorys = CategoryKind.values();
+		for (int i= 0; i< categorys.length; i++){
+			String categoryName = categorys[i].name();
+			int numberOfQuestions = 0;
+			int numberOfCorrectAnswers = 0;
+			for (int j=0; j< quizesResults.size();j++){
+				Result r = (Result) quizesResults.get(j);
+				ArrayList<CategoryInformation> array = r.getNumberOfQuestionForCategory();
+				CategoryInformation categoryInfo = array.get(i);
+				numberOfQuestions+= categoryInfo.getNumberQuestions();
+				numberOfCorrectAnswers+= categoryInfo.getNumberOfCorrects();
+			}
+			System.out.println("In the category "+ categoryName+"("+numberOfQuestions+
+					" questions answered)the user obtained a profit of "+
+					new Double(numberOfCorrectAnswers)/numberOfQuestions*100+"%");
+			
+		}
+		
+//		for (int i=0; i< quizesResults.size();i++){
+//			Result r = (Result) quizesResults.get(i);
+//			ArrayList<CategoryInformation> array = r.getNumberOfQuestionForCategory();
+//			String categoryNome = array.get(0).getName();
+//			int numberOfQuestions = 0;
+//			int numberOfCorrectAnswers = 0;
+//			for (CategoryInformation c : array){
+//				numberOfQuestions+=c.getNumberQuestions();
+//				numberOfCorrectAnswers+=c.getNumberOfCorrects();
+//			}
+//			System.out.println("The user obtained a profit of "+
+//					new Double(numberOfCorrectAnswers)/numberOfQuestions+"% in the category"+
+//					categoryNome);
+			
+//		}
+//			Result r = (Result) quizesResults.get(i);
+//			for (int j=0; j<r.getNumberOfQuestionForCategory().size();j++){
+//				
+//			}
+//		}
 		
 	}
 

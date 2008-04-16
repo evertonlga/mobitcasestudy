@@ -1,8 +1,6 @@
 package quiz.quiz;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 import quiz.questionGenerator.QuestionGenerator;
@@ -72,13 +70,16 @@ public class Quiz extends Thread implements Serializable {
 			
 			System.out.println(q);
 			int userAnswer = getAnswer(); 
-			if (q.getAnswer() == userAnswer)				
+			if (q.getAnswer() == userAnswer){				
 				res.setScore(result.getScore()+1);
+				res.setInformations(getPartialResult().setInformation(q.getCategory(),true));
+			}else res.setInformations(getPartialResult().setInformation(q.getCategory(),false));
 			
 			long acumulatedTimeBefore = getAcumulatedTime();
 			setAcumulatedTime(acumulatedTimeBefore + (System.currentTimeMillis() - getInitialTime()));
 			setInitialTime(System.currentTimeMillis());
 			res.setTime(getAcumulatedTime());
+			
 			setPartialResult(res);
 			
 			currentQuestion = i;
