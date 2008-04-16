@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import quiz.quiz.Quiz;
-import quiz.util.CategoryInformation;
+import quiz.util.CategoryResult;
 import quiz.util.CategoryKind;
 import quiz.util.Result;
 
@@ -53,7 +53,6 @@ public class QuizManager implements Serializable{
 						currentQuestion = question;
 					}
 				
-				
 			}
 			
 //			System.out.println(lista.size());
@@ -83,8 +82,8 @@ public class QuizManager implements Serializable{
 			int numberOfCorrectAnswers = 0;
 			for (int j=0; j< quizesResults.size();j++){
 				Result r = (Result) quizesResults.get(j);
-				ArrayList<CategoryInformation> array = r.getNumberOfQuestionForCategory();
-				CategoryInformation categoryInfo = array.get(i);
+				ArrayList<CategoryResult> array = r.getResultByCategory();
+				CategoryResult categoryInfo = array.get(i);
 				numberOfQuestions+= categoryInfo.getNumberQuestions();
 				numberOfCorrectAnswers+= categoryInfo.getNumberOfCorrects();
 			}

@@ -1,13 +1,13 @@
 package quiz.util;
 
-public class CategoryInformation{
+public class CategoryResult{
 	
 	String name;
 	int numberQuestions;
 	int numberOfCorrects;
 	
-	public CategoryInformation(CategoryKind kind) {
-		this.name = kind.name();
+	public CategoryResult(String name) {
+		this.name = name;
 		this.numberQuestions = 0;
 		this.numberOfCorrects = 0;
 	}

@@ -18,7 +18,7 @@ public class Result {
 
 	private int score;
 	
-	private ArrayList<CategoryInformation> numberOfQuestionForCategory;
+	private ArrayList<CategoryResult> resultByCategory;
 
 
 	/**
@@ -28,16 +28,16 @@ public class Result {
 	public Result() {
 		this.score = 0;
 		this.time = 0;
-		this.numberOfQuestionForCategory = inicialize();
+		this.resultByCategory = inicialize();
 	}
 
 	private ArrayList inicialize() {
-		numberOfQuestionForCategory = new ArrayList<CategoryInformation>();
+		resultByCategory = new ArrayList<CategoryResult>();
 		CategoryKind [] c = CategoryKind.values();
 		for (int i =0; i<c.length;i++){
-			numberOfQuestionForCategory.add(new CategoryInformation(c[i]));
+			resultByCategory.add(new CategoryResult(c[i].name()));
 		}
-		return numberOfQuestionForCategory;
+		return resultByCategory;
 	}
 
 	/**
@@ -72,24 +72,23 @@ public class Result {
 		return "Final Time: "+getTime()/1000L+"\nFinal Score: "+ getScore();
 	}
 
-	public ArrayList<CategoryInformation> setInformation(CategoryKind category, boolean correct) {
-		for (int i = 0;i< numberOfQuestionForCategory.size();i++){
-			CategoryInformation c = numberOfQuestionForCategory.get(i);
+	public void updateResultByCategory(CategoryKind category, boolean correct) {
+		for (int i = 0;i< resultByCategory.size();i++){
+			CategoryResult c = resultByCategory.get(i);
 			if (c.getName().equals(category.name())){
 				if (correct)
 					c.setNumberOfCorrects(c.getNumberOfCorrects()+1);
 				c.setNumberQuestions(c.numberQuestions+1);
 			}
 		}
-		return numberOfQuestionForCategory;
 	}
 
-	public ArrayList<CategoryInformation> getNumberOfQuestionForCategory() {
-		return numberOfQuestionForCategory;
+	public ArrayList<CategoryResult> getResultByCategory() {
+		return resultByCategory;
 	}
 
-	public void setInformations(ArrayList<CategoryInformation> info) {
-		this.numberOfQuestionForCategory = info;
+	public void setResultByCategory(ArrayList<CategoryResult> info) {
+		this.resultByCategory = info;
 		
 	}
 

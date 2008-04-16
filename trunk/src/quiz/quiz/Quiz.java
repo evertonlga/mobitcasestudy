@@ -19,7 +19,7 @@ public class Quiz extends Thread implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private long InitialTime;
+	private long initialTime;
 	
 	private long acumulatedTime;
 
@@ -33,13 +33,13 @@ public class Quiz extends Thread implements Serializable {
 	
 	Scanner input = new Scanner(System.in);
 
-	private static final int STARTING = 0;
+	private final int READY = 0;
 
-	private static final int HELPING = 1;
+	private final int HELPING = 1;
 
-	private static final int PAUSING = 2;
+	private final int RUNNING = 2;
 
-	private static final int ABORTING = 3;
+	private final int ENDING = 3;
 	
 	private int currentQuestion;
 
@@ -54,15 +54,19 @@ public class Quiz extends Thread implements Serializable {
 
 		this.questionGenerator = new QuestionGenerator();
 		this.result = new Result();
-		this.InitialTime = System.currentTimeMillis();
+		this.initialTime = System.currentTimeMillis();
 		this.acumulatedTime = 0;
 		this.Responded = false;
+		this.status = READY;
 
 	}
 
 	
 	public void run() {
-
+		synchronized (this) {
+			initialOptions();
+		}
+		setStatus(RUNNING);
 		for (int i = 0;i < numberOfQuestions; i++){
 			Result res = new Result();
 			setResponded(false);
@@ -72,8 +76,12 @@ public class Quiz extends Thread implements Serializable {
 			int userAnswer = getAnswer(); 
 			if (q.getAnswer() == userAnswer){				
 				res.setScore(result.getScore()+1);
-				res.setInformations(getPartialResult().setInformation(q.getCategory(),true));
-			}else res.setInformations(getPartialResult().setInformation(q.getCategory(),false));
+				getPartialResult().updateResultByCategory(q.getCategory(),true);
+				res.setResultByCategory(result.getResultByCategory());
+			}else {
+				getPartialResult().updateResultByCategory(q.getCategory(),false);
+				res.setResultByCategory(result.getResultByCategory());
+			}
 			
 			long acumulatedTimeBefore = getAcumulatedTime();
 			setAcumulatedTime(acumulatedTimeBefore + (System.currentTimeMillis() - getInitialTime()));
@@ -87,10 +95,9 @@ public class Quiz extends Thread implements Serializable {
 			synchronized (this) {
 				options();
 			}
-			
-			
-			
+				
 		}
+		setStatus(ENDING);
 	}
 	
 	private void options() {
@@ -108,6 +115,21 @@ public class Quiz extends Thread implements Serializable {
 		
 	}
 
+	private void initialOptions() {
+		System.out.println("\nFor start press 1\nFor abort the Quiz press 2\n" +
+		"For help press 3");
+		int key = input.nextInt();
+		switch (key) {
+			case 1:				
+			break;
+			case 2:abort();
+			break;
+			case 3:help();
+			break;
+		}
+		
+	}
+	
 
 	private int getAnswer() {
 		System.out.print("Give your answer:");
@@ -116,11 +138,13 @@ public class Quiz extends Thread implements Serializable {
 
 
 	public void help() {
+		setStatus(HELPING);
 		System.out.println("HELP!!!\n For back to Quiz press 0");
 		int r = 100;
 		while(r != 0){
 			r = input.nextInt();
 		}
+		setStatus(RUNNING);
 	}
 
 	public void pause() {
@@ -142,6 +166,7 @@ public class Quiz extends Thread implements Serializable {
 		synchronized (this) {
 			super.stop();	
 		}
+		setStatus(ENDING);
 	}
 
 	public Result getPartialResult() {
@@ -157,7 +182,7 @@ public class Quiz extends Thread implements Serializable {
 	}
 
 	public long getInitialTime() {
-		return InitialTime;
+		return initialTime;
 	}
 
 	public long getAcumulatedTime() {
@@ -169,7 +194,7 @@ public class Quiz extends Thread implements Serializable {
 	}
 
 	public void setInitialTime(long initialTime) {
-		InitialTime = initialTime;
+		this.initialTime = initialTime;
 	}
 		
 	public int currentQuestion(){
@@ -184,6 +209,16 @@ public class Quiz extends Thread implements Serializable {
 
 	public void setResponded(boolean answer) {
 		this.Responded = answer;
+	}
+
+
+	public int getStatus() {
+		return status;
+	}
+
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }
