@@ -2,7 +2,7 @@
 <list>
   <quiz.util.Question>
     <description>Primeira questão?</description>
-    <category>database</category>
+    <category>network</category>
     <alternatives>
       <string>Resposta 1</string>
       <string>Resposta 2</string>
@@ -14,7 +14,7 @@
   </quiz.util.Question>
    <quiz.util.Question>
     <description>Segunda questão?</description>
-    <category>database</category>
+    <category>softwareEngineering</category>
     <alternatives>
       <string>Resposta 1</string>
       <string>Resposta 2</string>
@@ -26,7 +26,7 @@
   </quiz.util.Question>
    <quiz.util.Question>
     <description>Terceira questão?</description>
-    <category>database</category>
+    <category>hardwareEngineering</category>
     <alternatives>
       <string>Resposta 1</string>
       <string>Resposta 2</string>
