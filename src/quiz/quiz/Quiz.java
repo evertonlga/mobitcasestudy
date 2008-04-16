@@ -6,6 +6,7 @@ import java.util.Scanner;
 import quiz.questionGenerator.QuestionGenerator;
 import quiz.util.Question;
 import quiz.util.Result;
+import quiz.util.StatusKind;
 
 /**
  * This class represents a Quiz. <br>
@@ -23,7 +24,7 @@ public class Quiz extends Thread implements Serializable {
 	
 	private long acumulatedTime;
 
-	private int status;
+	private StatusKind status;
 
 	private int numberOfQuestions;
 
@@ -32,18 +33,10 @@ public class Quiz extends Thread implements Serializable {
 	private QuestionGenerator questionGenerator;
 	
 	Scanner input = new Scanner(System.in);
-
-	private final int READY = 0;
-
-	private final int HELPING = 1;
-
-	private final int RUNNING = 2;
-
-	private final int ENDING = 3;
 	
 	private int currentQuestion;
 
-	private boolean Responded;
+	private boolean responded;
 
 	/**
 	 * Constructor
@@ -56,8 +49,8 @@ public class Quiz extends Thread implements Serializable {
 		this.result = new Result();
 		this.initialTime = System.currentTimeMillis();
 		this.acumulatedTime = 0;
-		this.Responded = false;
-		this.status = READY;
+		this.responded = false;
+		this.status = StatusKind.ready;
 
 	}
 
@@ -66,29 +59,21 @@ public class Quiz extends Thread implements Serializable {
 		synchronized (this) {
 			initialOptions();
 		}
-		setStatus(RUNNING);
+		setStatus(StatusKind.running);
 		for (int i = 0;i < numberOfQuestions; i++){
-			Result res = new Result();
+			Result res = getPartialResult().clone();
 			setResponded(false);
 			Question q = questionGenerator.getQuestion();
 			
 			System.out.println(q);
 			int userAnswer = getAnswer(); 
-			if (q.getAnswer() == userAnswer){				
-				res.setScore(result.getScore()+1);
-				getPartialResult().updateResultByCategory(q.getCategory(),true);
-				res.setResultByCategory(result.getResultByCategory());
-			}else {
-				getPartialResult().updateResultByCategory(q.getCategory(),false);
-				res.setResultByCategory(result.getResultByCategory());
-			}
 			
 			long acumulatedTimeBefore = getAcumulatedTime();
 			setAcumulatedTime(acumulatedTimeBefore + (System.currentTimeMillis() - getInitialTime()));
 			setInitialTime(System.currentTimeMillis());
 			res.setTime(getAcumulatedTime());
-			
-			setPartialResult(res);
+						
+			setPartialResult(res,q,userAnswer);
 			
 			currentQuestion = i;
 			setResponded(true);
@@ -97,7 +82,7 @@ public class Quiz extends Thread implements Serializable {
 			}
 				
 		}
-		setStatus(ENDING);
+		setStatus(StatusKind.ending);
 	}
 	
 	private void options() {
@@ -138,13 +123,13 @@ public class Quiz extends Thread implements Serializable {
 
 
 	public void help() {
-		setStatus(HELPING);
+		setStatus(StatusKind.helping);
 		System.out.println("HELP!!!\n For back to Quiz press 0");
 		int r = 100;
 		while(r != 0){
 			r = input.nextInt();
 		}
-		setStatus(RUNNING);
+		setStatus(StatusKind.running);
 	}
 
 	public void pause() {
@@ -166,17 +151,23 @@ public class Quiz extends Thread implements Serializable {
 		synchronized (this) {
 			super.stop();	
 		}
-		setStatus(ENDING);
+		setStatus(StatusKind.ending);
 	}
 
 	public Result getPartialResult() {
 		return result;
 	}
 
-	public void setPartialResult(Result result) {
-		this.result = result;
+	public void setPartialResult(Result res, Question q, int userAnswer) {		
+		if (q.getAnswer() == userAnswer){				
+			res.setScore(result.getScore()+1);
+			res.updateResultByCategory(q.getCategory(),true);
+		}else {
+			res.updateResultByCategory(q.getCategory(),false);
+		}
+		result = res;
 	}
-
+	
 	public void configure(int numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
 	}
@@ -203,21 +194,21 @@ public class Quiz extends Thread implements Serializable {
 
 
 	public boolean isResponded() {
-		return Responded;
+		return responded;
 	}
 
 
 	public void setResponded(boolean answer) {
-		this.Responded = answer;
+		this.responded = answer;
 	}
 
 
-	public int getStatus() {
+	public StatusKind getStatus() {
 		return status;
 	}
 
 
-	public void setStatus(int status) {
+	public void setStatus(StatusKind status) {
 		this.status = status;
 	}
 

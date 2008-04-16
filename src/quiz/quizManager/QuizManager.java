@@ -55,15 +55,7 @@ public class QuizManager implements Serializable{
 				
 			}
 			
-//			System.out.println(lista.size());
-//			for (int i = 0; i < lista.size(); i++) {
-//				Result result2 = (Result)lista.get(i);
-//				System.out.println("=>>  TIME "+result2.getTime()/1000L+" =>>  SCORE "+result2.getScore());
-//			}
-			
-			
 			Result finalResult =  quiz.getPartialResult();
-			//System.out.println(finalResult);
 			evaluateResult(finalResult, numberOfQuestions);
 			quizesResults.add(finalResult);
 					
@@ -89,35 +81,14 @@ public class QuizManager implements Serializable{
 			}
 			System.out.println("In the category "+ categoryName+"("+numberOfQuestions+
 					" questions answered)the user obtained a profit of "+
-					new Double(numberOfCorrectAnswers)/numberOfQuestions*100+"%");
+					(numberOfQuestions != 0 ? 
+							new Double(numberOfCorrectAnswers)/numberOfQuestions*100 
+							: 0)+"%");
 			
-		}
-		
-//		for (int i=0; i< quizesResults.size();i++){
-//			Result r = (Result) quizesResults.get(i);
-//			ArrayList<CategoryInformation> array = r.getNumberOfQuestionForCategory();
-//			String categoryNome = array.get(0).getName();
-//			int numberOfQuestions = 0;
-//			int numberOfCorrectAnswers = 0;
-//			for (CategoryInformation c : array){
-//				numberOfQuestions+=c.getNumberQuestions();
-//				numberOfCorrectAnswers+=c.getNumberOfCorrects();
-//			}
-//			System.out.println("The user obtained a profit of "+
-//					new Double(numberOfCorrectAnswers)/numberOfQuestions+"% in the category"+
-//					categoryNome);
-			
-//		}
-//			Result r = (Result) quizesResults.get(i);
-//			for (int j=0; j<r.getNumberOfQuestionForCategory().size();j++){
-//				
-//			}
-//		}
-		
+		}		
 	}
 
 	public void evaluateResult(Result result, int numberOfQuestions){
-		double d = result.getScore()/numberOfQuestions*100;
 		System.out.println(result+"\nThe percentage of successes was: "+
 				new Double(result.getScore())/numberOfQuestions*100+"%");
 		
