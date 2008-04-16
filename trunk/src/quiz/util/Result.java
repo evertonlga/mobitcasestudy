@@ -92,7 +92,14 @@ public class Result {
 		
 	}
 
-
+	public Result clone(){
+		Result result = new Result();
+		result.setScore(this.score);
+		result.setTime(this.time);
+		result.setResultByCategory(this.resultByCategory);
+		return result;
+		
+	}
 	
 }
 
