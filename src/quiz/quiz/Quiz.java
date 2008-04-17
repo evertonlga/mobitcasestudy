@@ -61,22 +61,12 @@ public class Quiz extends Thread implements Serializable {
 		}
 		setStatus(StatusKind.running);
 		for (int i = 0;i < numberOfQuestions; i++){
-			Result res = getPartialResult().clone();
-			setResponded(false);
 			Question q = questionGenerator.getQuestion();
-			
 			System.out.println(q);
 			int userAnswer = getAnswer(); 
-			
-			long acumulatedTimeBefore = getAcumulatedTime();
-			setAcumulatedTime(acumulatedTimeBefore + (System.currentTimeMillis() - getInitialTime()));
-			setInitialTime(System.currentTimeMillis());
-			res.setTime(getAcumulatedTime());
-						
-			setPartialResult(res,q,userAnswer);
+			answerQuestion(q,userAnswer);
 			
 			currentQuestion = i;
-			setResponded(true);
 			synchronized (this) {
 				options();
 			}
@@ -85,6 +75,27 @@ public class Quiz extends Thread implements Serializable {
 		setStatus(StatusKind.ending);
 	}
 	
+	public void answerQuestion(Question q, int userAnswer) {
+		Result res = getPartialResult().clone();
+		setResponded(false);
+		if (q.getAnswer() == userAnswer){				
+			res.setScore(result.getScore()+1);
+			res.updateResultByCategory(q.getCategory(),true);
+		}else {
+			res.updateResultByCategory(q.getCategory(),false);
+		}
+		
+		long acumulatedTimeBefore = getAcumulatedTime();
+		setAcumulatedTime(acumulatedTimeBefore + (System.currentTimeMillis() - getInitialTime()));
+		setInitialTime(System.currentTimeMillis());
+		res.setTime(getAcumulatedTime());
+		setPartialResult(res);
+				
+		setResponded(true);
+		
+	}
+
+
 	private void options() {
 		System.out.println("\nFor pause press 1\nFor abort the Quiz press 2\n" +
 		"For help press 3");
@@ -158,14 +169,8 @@ public class Quiz extends Thread implements Serializable {
 		return result;
 	}
 
-	public void setPartialResult(Result res, Question q, int userAnswer) {		
-		if (q.getAnswer() == userAnswer){				
-			res.setScore(result.getScore()+1);
-			res.updateResultByCategory(q.getCategory(),true);
-		}else {
-			res.updateResultByCategory(q.getCategory(),false);
-		}
-		result = res;
+	public void setPartialResult(Result res) {		
+		this.result = res;
 	}
 	
 	public void configure(int numberOfQuestions) {
