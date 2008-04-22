@@ -18,7 +18,7 @@ public class QuizTester{
 		try {
 			server.setToReady();
 			arbiter.setVerdict(server.isInReady(),0);
-			server.start();
+			server.setToRunning();
 			arbiter.setVerdict(server.isInRunning(),0);
 			server.pause();
 			arbiter.setVerdict(server.isInRunning(),0);

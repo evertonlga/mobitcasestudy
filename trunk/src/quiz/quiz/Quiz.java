@@ -54,11 +54,17 @@ public class Quiz extends Thread implements Serializable {
 
 	}
 
+	public String getStateQuiz(){
+		return getStatus().name();
+	}
 	
-	public void run() {
+	public void run(){
 		synchronized (this) {
-			initialOptions();
+			initialOptions(input.nextInt());
 		}
+	}
+	
+	public void begin() {
 		setStatus(StatusKind.running);
 		for (int i = 0;i < numberOfQuestions; i++){
 			Question q = questionGenerator.getQuestion();
@@ -111,12 +117,14 @@ public class Quiz extends Thread implements Serializable {
 		
 	}
 
-	private void initialOptions() {
+	
+	
+	public void initialOptions(int key) {
 		System.out.println("\nFor start press 1\nFor abort the Quiz press 2\n" +
 		"For help press 3");
-		int key = input.nextInt();
+		//int key = input.nextInt();
 		switch (key) {
-			case 1:				
+			case 1: begin();			
 			break;
 			case 2:abort();
 			break;
@@ -215,6 +223,10 @@ public class Quiz extends Thread implements Serializable {
 
 	public void setStatus(StatusKind status) {
 		this.status = status;
+	}
+
+	public void setNumberOfQuestions(int numberOfQuestions) {
+		this.numberOfQuestions = numberOfQuestions;
 	}
 
 }

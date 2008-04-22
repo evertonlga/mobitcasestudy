@@ -1,42 +1,55 @@
 package BIT;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
 import quiz.quiz.Quiz;
 
 @SuppressWarnings("serial")
 public class TestableQuiz extends Quiz {
-
+	
 	//Option one
-//	public void setToReady() {
-//		setState("ready");
-//	}
-//
-//	public void setToRunning() {
-//		setState("running");
-//	}
-//	
-//	public void setToHelping(){
-//		setState("helping");
-//	}
-//	
-//	public void setToEnding(){
-//		setState("helping");
-//	}
-//	
-//	public boolean isInReady(){		
-//		return getState().equals("ready");
-//	}
-//
-//	public boolean isInRunning() {		
-//		return getState().equals("running");
-//	}
-//
-//	public boolean isInAccountHelping() {		
-//		return getState().equals("helping");
-//	}
-//	
-//	public boolean isInAccountEnding() {		
-//		return getState().equals("ending");
-//	}
+	public void setToReady() {
+		
+	}
+
+	public void setToRunning() {
+		Scanner input;
+		try {
+			BufferedReader in = new BufferedReader(new FileReader(new File("resp.txt")));
+			setNumberOfQuestions(5);
+			int r = Integer.parseInt(in.readLine());	
+			initialOptions(r);
+		} catch (Exception e) {}			
+	}
+	
+	public void setToHelping(){
+		
+	}
+	
+	public void setToEnding(){
+		
+	}
+	
+	public boolean isInReady(){		
+		return getStateQuiz().equals("ready");
+	}
+
+	public boolean isInRunning() {		
+		return getStateQuiz().equals("running");
+	}
+
+	public boolean isInHelping() {		
+		return getStateQuiz().equals("helping");
+	}
+	
+	public boolean isInEnding() {		
+		return getStateQuiz().equals("ending");
+	}
 	
 	public TestableQuiz(String name) {
 		super(name);
@@ -44,31 +57,31 @@ public class TestableQuiz extends Quiz {
 	}
 
 	//Option two
-	public void setToReady() {
-	}
-
-	public void setToRunning() {
-	}
-	
-	public void setToHelping(){
-	}
-	
-	public void setToEnding(){
-	}
-	
-	public boolean isInReady(){	
-		return true;
-	}
-
-	public boolean isInRunning() {
-		return true;
-	}
-
-	public boolean isInHelping() {
-		return true;
-	}
-	
-	public boolean isInEnding() {
-		return true;
-	}
+//	public void setToReady() {
+//	}
+//
+//	public void setToRunning() {
+//	}
+//	
+//	public void setToHelping(){
+//	}
+//	
+//	public void setToEnding(){
+//	}
+//	
+//	public boolean isInReady(){	
+//		return true;
+//	}
+//
+//	public boolean isInRunning() {
+//		return true;
+//	}
+//
+//	public boolean isInHelping() {
+//		return true;
+//	}
+//	
+//	public boolean isInEnding() {
+//		return true;
+//	}
 }
