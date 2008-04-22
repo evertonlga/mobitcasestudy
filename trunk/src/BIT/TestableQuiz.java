@@ -19,20 +19,22 @@ public class TestableQuiz extends Quiz {
 
 	public void setToRunning() {
 		Scanner input;
-		try {
-			BufferedReader in = new BufferedReader(new FileReader(new File("resp.txt")));
-			setNumberOfQuestions(5);
-			int r = Integer.parseInt(in.readLine());	
-			initialOptions(r);
-		} catch (Exception e) {}			
+		help(0);
+//		try {
+////			BufferedReader in = new BufferedReader(new FileReader(new File("resp.txt")));
+////			setNumberOfQuestions(5);
+////			int r = Integer.parseInt(in.readLine());	
+////			initialOptions(1);
+//			setStatus("running");
+//		} catch (Exception e) {}			
 	}
 	
 	public void setToHelping(){
-		
+		help(1);
 	}
 	
 	public void setToEnding(){
-		
+		abort();
 	}
 	
 	public boolean isInReady(){		

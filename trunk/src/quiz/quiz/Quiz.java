@@ -107,11 +107,11 @@ public class Quiz extends Thread implements Serializable {
 		"For help press 3");
 		int key = input.nextInt();
 		switch (key) {
-			case 1:pause();				
+			case 1:pause(key);				
 			break;
 			case 2:abort();
 			break;
-			case 3:help();
+			case 3:help(key);
 			break;
 		}
 		
@@ -124,11 +124,11 @@ public class Quiz extends Thread implements Serializable {
 		"For help press 3");
 		//int key = input.nextInt();
 		switch (key) {
-			case 1: begin();			
+			case 1:			
 			break;
 			case 2:abort();
 			break;
-			case 3:help();
+			case 3:help(key);
 			break;
 		}
 		
@@ -141,28 +141,36 @@ public class Quiz extends Thread implements Serializable {
 	}
 
 
-	public void help() {
+	public void help(int i) {
 		setStatus(StatusKind.helping);
-		System.out.println("HELP!!!\n For back to Quiz press 0");
-		int r = 100;
-		while(r != 0){
-			r = input.nextInt();
-		}
-		setStatus(StatusKind.running);
+//		System.out.println("HELP!!!\n For back to Quiz press 0");
+//		int r = 100;
+//		while(r != 0){
+//			r = input.nextInt();
+//		}
+//		setStatus(StatusKind.running);
+		if (i == 0)
+			setStatus(StatusKind.running);
 	}
 
-	public void pause() {
-		try {
-			System.out.println("For unpause press 0");
-			boolean b = true;
-			while(b == true){
-				sleep(10);
-				int p = input.nextInt();
-				if (p == 0)
-					b = false;
-			}
+	
+	public void pause(int i) {
+//		try {
+//			System.out.println("For unpause press 0");
+//			boolean b = true;
+//			while(b == true){
+//				sleep(10);
+//				int p = input.nextInt();
+//				if (p == 0)
+//					b = false;
+//			}
+//			setInitialTime(System.currentTimeMillis());
+//		} catch (InterruptedException e) {
+//		}
+		if (i != 0){
+			interrupt();
+		} else {
 			setInitialTime(System.currentTimeMillis());
-		} catch (InterruptedException e) {
 		}
 	}
 
