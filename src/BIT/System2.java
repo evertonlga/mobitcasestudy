@@ -6,7 +6,7 @@ public class System2 {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		TestingQuizManager testing =new TestingQuizManager();
+		TestingQuizManager testing = new TestingQuizManager();
 		QuizTester tester = new QuizTester();
 		TestableQuiz testable = new TestableQuiz("x");
 		
@@ -14,7 +14,6 @@ public class System2 {
 		testing.setTester(tester);
 		testing.performTest();
 		
-
 	}
 
 }

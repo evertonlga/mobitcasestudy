@@ -18,13 +18,13 @@ public class QuizTester{
 		try {
 			server.setToReady();
 			arbiter.setVerdict(server.isInReady(),0);
-			server.setToRunning();
-			arbiter.setVerdict(server.isInRunning(),0);
-			server.pause();
-			arbiter.setVerdict(server.isInRunning(),0);
 			server.setToHelping();
 			arbiter.setVerdict(server.isInHelping(),0);
 			server.setToRunning();
+			arbiter.setVerdict(server.isInRunning(),0);
+			server.pause(1);
+			arbiter.setVerdict(server.isInRunning(),0);
+			server.pause(0);
 			arbiter.setVerdict(server.isInRunning(),0);
 			server.setToEnding();
 			arbiter.setVerdict(server.isInEnding(),0);
