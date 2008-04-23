@@ -17,41 +17,29 @@ public class QuizTester{
 	public static void testCase1(){
 		try {
 			server.setToReady();
-			System.out.println(server.getStateQuiz());
 			arbiter.setVerdict(server.isInReady(),0);
 			server.configure(5);
 			server.start();
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(1);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(2);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.pause(1);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.pause(0);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(3);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.help(1);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInHelping(),0);
 			server.help(0);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(4);
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(5);
-//			server.abort();
-			System.out.println(server.getStateQuiz());
+			arbiter.setVerdict(server.isInEnding(),0);
 
-//			server.setToHelping();
-//			arbiter.setVerdict(server.isInHelping(),0);
-//			server.setToRunning();
-//			arbiter.setVerdict(server.isInRunning(),0);
-//			server.pause(1);
-//			arbiter.setVerdict(server.isInRunning(),0);
-//			server.pause(0);
-//			arbiter.setVerdict(server.isInRunning(),0);
-//			server.setToEnding();
-//			arbiter.setVerdict(server.isInEnding(),0);
 		} catch (Exception e) {
 			arbiter.setVerdict(false, 1);
 		} catch (Error e) {
@@ -62,7 +50,25 @@ public class QuizTester{
 	}
 
 	public static void testCase2(){
-		//code		
+//		try{
+//			server = new TestableQuiz("");
+//			server.setToReady();
+//			arbiter.setVerdict(server.isInReady(),0);
+//			server.configure(5);
+//			server.start();
+//			arbiter.setVerdict(server.isInRunning(),0);
+//			server.answerQuestion(1);
+//			arbiter.setVerdict(server.isInRunning(),0);
+//			server.answerQuestion(2);
+//			arbiter.setVerdict(server.isInRunning(),0);
+//			server.abort();
+//			arbiter.setVerdict(server.isInEnding(),0);
+//		} catch (Exception e) {
+//			arbiter.setVerdict(false, 1);
+//		} catch (Error e) {
+//			arbiter.setVerdict(false, 2);
+//		}  
+
 		arbiter.definesPartialVerdict();
 	}
 
