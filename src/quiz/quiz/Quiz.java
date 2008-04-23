@@ -59,31 +59,44 @@ public class Quiz extends Thread implements Serializable {
 	}
 	
 	public void run(){
-		synchronized (this) {
-			initialOptions(input.nextInt());
-		}
-	}
-	
-	public void begin() {
 		setStatus(StatusKind.running);
-		for (int i = 0;i < numberOfQuestions; i++){
-			Question q = questionGenerator.getQuestion();
-			System.out.println(q);
-			int userAnswer = getAnswer(); 
-			answerQuestion(q,userAnswer);
-			
-			currentQuestion = i;
-			synchronized (this) {
-				options();
-			}
-				
+		while (numberOfQuestions>0) {
+			try {
+				sleep(100);
+			} catch (InterruptedException e) {}
 		}
 		setStatus(StatusKind.ending);
 	}
 	
-	public void answerQuestion(Question q, int userAnswer) {
+//	public void run(){
+//		synchronized (this) {
+//			initialOptions(input.nextInt());
+//		}
+//	}
+//	
+//	public void begin() {
+//		setStatus(StatusKind.running);
+//		for (int i = 0;i < numberOfQuestions; i++){
+//			Question q = questionGenerator.getQuestion();
+//			System.out.println(q);
+//			int userAnswer = getAnswer(); 
+//			answerQuestion(q,userAnswer);
+//			
+//			currentQuestion = i;
+//			synchronized (this) {
+//				options();
+//			}
+//				
+//		}
+//		setStatus(StatusKind.ending);
+//	}
+	
+	public void answerQuestion(int userAnswer) {
 		Result res = getPartialResult().clone();
 		setResponded(false);
+		Question q = questionGenerator.getQuestion();
+		System.out.println(q);
+		System.out.println(userAnswer);
 		if (q.getAnswer() == userAnswer){				
 			res.setScore(result.getScore()+1);
 			res.updateResultByCategory(q.getCategory(),true);
@@ -98,6 +111,7 @@ public class Quiz extends Thread implements Serializable {
 		setPartialResult(res);
 				
 		setResponded(true);
+		configure(numberOfQuestions-1);
 		
 	}
 
