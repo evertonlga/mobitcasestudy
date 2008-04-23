@@ -59,6 +59,7 @@ public class Quiz extends Thread implements Serializable {
 	}
 	
 	public void run(){
+		System.out.println("RUN");
 		setStatus(StatusKind.running);
 		while (numberOfQuestions>0) {
 			try {
