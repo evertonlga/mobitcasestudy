@@ -16,7 +16,7 @@ public class TestableQuiz extends Quiz {
 	public void setToReady() {
 		
 	}
-
+	
 	public void setToRunning() {
 		Scanner input;
 		help(0);
