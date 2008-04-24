@@ -183,8 +183,10 @@ public class Quiz extends Thread implements Serializable {
 //		} catch (InterruptedException e) {
 //		}
 		if (i != 0){
+			setStatus(StatusKind.pausing);
 			interrupt();
 		} else {
+			setStatus(StatusKind.running);
 			setInitialTime(System.currentTimeMillis());
 		}
 	}

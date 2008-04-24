@@ -10,6 +10,6 @@ package quiz.util;
  */
 public enum StatusKind {
 
-	ready, helping, running, ending
+	ready, helping, running, pausing, ending
 
 }

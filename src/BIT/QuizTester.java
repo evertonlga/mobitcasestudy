@@ -26,7 +26,7 @@ public class QuizTester{
 			server.answerQuestion(2);
 			arbiter.setVerdict(server.isInRunning(),0);
 			server.pause(1);
-			arbiter.setVerdict(server.isInRunning(),0);
+			arbiter.setVerdict(server.isInPausing(),0);
 			server.pause(0);
 			arbiter.setVerdict(server.isInRunning(),0);
 			server.answerQuestion(3);
