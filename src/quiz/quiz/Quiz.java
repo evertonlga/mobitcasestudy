@@ -16,8 +16,8 @@ import quiz.util.StatusKind;
  * @version 1.0
  * 
  */
-public class Quiz extends Thread implements Serializable {
-
+public class Quiz extends Thread implements Serializable ,Cloneable {
+	
 	private static final long serialVersionUID = 1L;
 
 	private long initialTime;
@@ -193,7 +193,7 @@ public class Quiz extends Thread implements Serializable {
 
 	public void abort() {
 		synchronized (this) {
-			super.stop();	
+			super.interrupt();	
 		}
 		setStatus(StatusKind.ending);
 	}
@@ -253,5 +253,14 @@ public class Quiz extends Thread implements Serializable {
 	public void setNumberOfQuestions(int numberOfQuestions) {
 		this.numberOfQuestions = numberOfQuestions;
 	}
+
+	public QuestionGenerator getQuestionGenerator() {
+		return questionGenerator;
+	}
+
+	public void setQuestionGenerator(QuestionGenerator questionGenerator) {
+		this.questionGenerator = questionGenerator;
+	}
+	
 
 }
