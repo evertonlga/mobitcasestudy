@@ -57,6 +57,16 @@ public class TestableQuiz extends Quiz {
 		super(name);
 		// TODO Auto-generated constructor stub
 	}
+	
+	public TestableQuiz clonar(){
+		try {
+			return (TestableQuiz) clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	//Option two
 //	public void setToReady() {
