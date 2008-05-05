@@ -19,7 +19,7 @@ import com.thoughtworks.xstream.XStream;
  * @version 1.0
  * 
  */
-public class QuestionGenerator {
+public class QuestionGenerator implements Cloneable{
 
 	public ArrayList<Question> questions;
 
@@ -65,6 +65,16 @@ public class QuestionGenerator {
 
 	public ArrayList<Question> returnQuestions() {
 		return this.questions;
+	}
+	
+	public QuestionGenerator clonar(){
+		try {
+			return (QuestionGenerator) clone();
+		} catch (CloneNotSupportedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	
